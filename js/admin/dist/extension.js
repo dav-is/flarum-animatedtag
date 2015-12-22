@@ -34,9 +34,22 @@ System.register('davis/animatedtag/components/AnimatedTagSettingsModal', ['flaru
               m(
                 'label',
                 null,
-                'Limit Number of Websites'
+                app.translator.trans('davis-animatedtag.admin.animationtype')
               ),
-              m('input', { className: 'FormControl', bidi: this.setting('davis.animatedtag.limit') })
+              m(
+                'select',
+                { className: 'FormControl', bidi: this.setting('davis.animatedtag.animationtype') },
+                m(
+                  'option',
+                  { value: '0' },
+                  app.translator.trans('davis-animatedtag.admin.animationtypes.0')
+                ),
+                m(
+                  'option',
+                  { value: '1' },
+                  app.translator.trans('davis-animatedtag.admin.animationtypes.1')
+                )
+              )
             )];
           }
         }]);
