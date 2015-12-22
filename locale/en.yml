@@ -1,3 +1,6 @@
 davis-animatedtag:
-  forum:
-    test: "blank"
+  admin:
+    animationtype: "Animation Type"
+    animationtypes:
+      0: "Triangles"
+      1: "Bubbles"
