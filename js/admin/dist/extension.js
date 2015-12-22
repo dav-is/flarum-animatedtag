@@ -48,6 +48,11 @@ System.register('davis/animatedtag/components/AnimatedTagSettingsModal', ['flaru
                   'option',
                   { value: '1' },
                   app.translator.trans('davis-animatedtag.admin.animationtypes.1')
+                ),
+                m(
+                  'option',
+                  { value: '2' },
+                  app.translator.trans('davis-animatedtag.admin.animationtypes.2')
                 )
               )
             )];

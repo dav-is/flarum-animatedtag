@@ -4,3 +4,4 @@ davis-animatedtag:
     animationtypes:
       0: "Triangles"
       1: "Bubbles"
+      2: "Snow"

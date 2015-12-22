@@ -16,6 +16,7 @@ export default class AnimatedTagSettingsModal extends SettingsModal {
         <select className="FormControl" bidi={this.setting('davis.animatedtag.animationtype')}>
           <option value="0">{app.translator.trans('davis-animatedtag.admin.animationtypes.0')}</option>
           <option value="1">{app.translator.trans('davis-animatedtag.admin.animationtypes.1')}</option>
+          <option value="2">{app.translator.trans('davis-animatedtag.admin.animationtypes.2')}</option>
         </select>
       </div>
     ];
