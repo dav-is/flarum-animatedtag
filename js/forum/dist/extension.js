@@ -11,14 +11,13 @@ System.register('davis/socialprofile/main', ['flarum/extend', 'flarum/components
         execute: function () {
 
             app.initializers.add('davis-animatedtag', function () {
-                var rendered = false;
                 extend(CommentPost.prototype, 'config', function () {
                     renderani();
                 });
 
                 function renderani() {
-                    if (!rendered) {
-                        var width, height, largeHeader, canvas, ctx, triangles, target, animateHeader;
+                    if (document.getElementById('tag-canvas')) {} else {
+                        var width, largeHeader, canvas, ctx, triangles, height, target, animateHeader;
                         var cltp;
                         var cl;
                         var trifreq;
@@ -95,7 +94,7 @@ System.register('davis/socialprofile/main', ['flarum/extend', 'flarum/components
 
                             var resize = function resize() {
                                 width = window.innerWidth;
-                                height = window.innerHeight;
+                                height = window.innerHeight / 5;
                                 largeHeader.style.height = height + 'px';
                                 canvas.width = width;
                                 canvas.height = height;
@@ -183,8 +182,6 @@ System.register('davis/socialprofile/main', ['flarum/extend', 'flarum/components
                             initHeader();
                             addListeners();
                             initAnimation();
-
-                            rendered = true;
                         })();
                     }
                 }

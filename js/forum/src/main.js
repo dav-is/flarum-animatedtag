@@ -2,14 +2,13 @@ import { extend } from 'flarum/extend';
 import CommentPost from 'flarum/components/CommentPost'
 
 app.initializers.add('davis-animatedtag', function() {
-    var rendered = false;
     extend(CommentPost.prototype, 'config', function() {
         renderani();
     });
     
 function renderani(){
-    if (!rendered) {
-   var width, height, largeHeader, canvas, ctx, triangles, target, animateHeader = true;
+   if(document.getElementById('tag-canvas')){}else{
+   var width, largeHeader, canvas, ctx, triangles, height, target, animateHeader = true;
     var cltp = document.getElementsByClassName("Hero")[0].style['background-color'];
     cltp = cltp.substring(4, cltp.length-1)
          .replace(/ /g, '')
@@ -49,7 +48,7 @@ function renderani(){
         if(document.getElementById('tag-canvas')){}else{
         largeHeader.insertBefore(canvastemp, largeHeader.firstChild);
         }
-        
+
         canvas = document.getElementById('tag-canvas');
         canvas.width = width;
         canvas.height = height;
@@ -101,7 +100,7 @@ function renderani(){
 
     function resize() {
         width = window.innerWidth;
-        height = window.innerHeight;
+        height = (window.innerHeight/5);
         largeHeader.style.height = height+'px';
         canvas.width = width;
         canvas.height = height;
@@ -156,8 +155,6 @@ function renderani(){
 
         this.init = init;
     }
-    rendered = true;
     }
-    }
-    
+}
     });
