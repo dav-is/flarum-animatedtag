@@ -1,4 +1,4 @@
-System.register('davis/socialprofile/components/AnimatedTagSettingsModal', ['flarum/components/SettingsModal'], function (_export) {
+System.register('davis/animatedtag/components/AnimatedTagSettingsModal', ['flarum/components/SettingsModal'], function (_export) {
   'use strict';
 
   var SettingsModal, AnimatedTagSettingsModal;
@@ -47,7 +47,7 @@ System.register('davis/socialprofile/components/AnimatedTagSettingsModal', ['fla
     }
   };
 });;
-System.register('davis/socialprofile/main', ['flarum/extend', 'flarum/app', 'davis/animatedtag/components/AnimatedTagSettingsModal'], function (_export) {
+System.register('davis/animatedtag/main', ['flarum/extend', 'flarum/app', 'davis/animatedtag/components/AnimatedTagSettingsModal'], function (_export) {
   'use strict';
 
   var extend, app, AnimatedTagSettingsModal;
