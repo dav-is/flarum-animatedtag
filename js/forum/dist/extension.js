@@ -12,20 +12,21 @@ System.register('davis/socialprofile/main', ['flarum/extend', 'flarum/components
 
             app.initializers.add('davis-animatedtag', function () {
                 extend(CommentPost.prototype, 'config', function () {
-                    renderani();
+                    renderani(app.forum.attribute('animationtype'));
                 });
 
-                function renderani() {
+                function renderani(type) {
+                    //Make sure canvas doesn't get added twice
                     if (document.getElementById('tag-canvas')) {} else {
-                        var width, largeHeader, canvas, ctx, triangles, height, target, animateHeader;
-                        var cltp;
-                        var cl;
-                        var trifreq;
-                        var trinum;
-                        var tempclr;
+                        var width, largeHeader, canvas, ctx, triangles, circles, height, target, animateHeader;
                         var tpcolor;
                         var colors;
                         var i;
+                        var trifreq;
+                        var trinum;
+                        var cltp;
+                        var cl;
+                        var tempclr;
 
                         (function () {
                             var initHeader = function initHeader() {
@@ -48,10 +49,22 @@ System.register('davis/socialprofile/main', ['flarum/extend', 'flarum/components
                                 ctx = canvas.getContext('2d');
 
                                 // create particles
-                                triangles = [];
-                                for (var x = 0; x < trinum; x++) {
-                                    addTriangle(x * trifreq);
+                                switch (type) {
+                                    case "0":
+                                        triangles = [];
+                                        for (var x = 0; x < trinum; x++) {
+                                            addTriangle(x * trifreq);
+                                        }
+                                        break;
+                                    case "1":
+                                        circles = [];
+                                        for (var x = 0; x < width * 0.5; x++) {
+                                            var c = new Circle();
+                                            circles.push(c);
+                                        }
+                                        break;
                                 }
+                                animate();
                             };
 
                             var addTriangle = function addTriangle(delay) {
@@ -60,10 +73,6 @@ System.register('davis/socialprofile/main', ['flarum/extend', 'flarum/components
                                     triangles.push(t);
                                     tweenTriangle(t);
                                 }, delay);
-                            };
-
-                            var initAnimation = function initAnimation() {
-                                animate();
                             };
 
                             var tweenTriangle = function tweenTriangle(tri) {
@@ -101,15 +110,27 @@ System.register('davis/socialprofile/main', ['flarum/extend', 'flarum/components
                             };
 
                             var animate = function animate() {
-                                if (animateHeader) {
-                                    ctx.clearRect(0, 0, width, height);
-                                    for (var i in triangles) {
-                                        triangles[i].draw();
-                                    }
+                                switch (type) {
+                                    case "0":
+                                        if (animateHeader) {
+                                            ctx.clearRect(0, 0, width, height);
+                                            for (var i in triangles) {
+                                                triangles[i].draw();
+                                            }
+                                        }
+                                        requestAnimationFrame(animate);
+                                        break;
+                                    case "1":
+                                        if (animateHeader) {
+                                            ctx.clearRect(0, 0, width, height);
+                                            for (var i in circles) {
+                                                circles[i].draw();
+                                            }
+                                        }
+                                        requestAnimationFrame(animate);
+                                        break;
                                 }
-                                requestAnimationFrame(animate);
                             }
-
                             // Canvas manipulation
                             ;
 
@@ -151,37 +172,79 @@ System.register('davis/socialprofile/main', ['flarum/extend', 'flarum/components
                                 };
 
                                 this.init = init;
+                            }
+                            // Canvas manipulation
+                            ;
+
+                            var Circle = function Circle() {
+                                var _this = this;
+
+                                // constructor
+                                (function () {
+                                    _this.pos = {};
+                                    init();
+                                })();
+
+                                function init() {
+                                    _this.pos.x = Math.random() * width;
+                                    _this.pos.y = height + Math.random() * 100;
+                                    _this.alpha = 0.1 + Math.random() * 0.3;
+                                    _this.scale = 0.1 + Math.random() * 0.3;
+                                    _this.velocity = Math.random();
+                                }
+
+                                this.draw = function () {
+                                    if (_this.alpha <= 0) {
+                                        init();
+                                    }
+                                    _this.pos.y -= _this.velocity;
+                                    _this.alpha -= 0.0005;
+                                    ctx.beginPath();
+                                    ctx.arc(_this.pos.x, _this.pos.y, _this.scale * 10, 0, 2 * Math.PI, false);
+                                    ctx.fillStyle = 'rgba(255,255,255,' + _this.alpha + ')';
+                                    ctx.fill();
+                                };
                             };
 
+                            //Define Varibles
                             animateHeader = true;
+                            tpcolor = {};
+                            colors = [];
+                            i = 0;
+
+                            //DELETE SOME TIME
+                            trifreq = 10;
+                            //Bigger is slower rel of shapes
+                            trinum = 480;
+                            //org 480
+
+                            //Define color of hero background
                             cltp = document.getElementsByClassName("Hero")[0].style['background-color'];
 
                             cltp = cltp.substring(4, cltp.length - 1).replace(/ /g, '').split(',');
                             cltp[0] = Number(cltp[0]);
                             cltp[1] = Number(cltp[1]);
                             cltp[2] = Number(cltp[2]);
+                            //Convert Hero Background to HEX
                             cl = $ui.color.rgb2hex(cltp);
-                            trifreq = 10;
-                            //Bigger is slower rel of shapes
-                            trinum = 480;
-                            //org 480
 
+                            //Get Tetradic Colors from background
                             tempclr = $ui.color.tetradic(cl);
 
-                            tempclr.splice(0, 1); //Remove background color from colors
-                            tpcolor = {};
-                            colors = [];
-                            i = 0;
-
+                            //Remove Background color from group
+                            tempclr.splice(0, 1);
+                            //Put colors into array
                             while (i < 3) {
+                                //Change color to RGB
                                 tpcolor[i] = $ui.color.hex2rgb(tempclr[i]);
+                                //Change RGB Array into String
                                 colors[i] = tpcolor[i][0] + "," + tpcolor[i][1] + "," + tpcolor[i][2];
+                                //Go to next color
                                 i++;
                             }
-                            // Main
+                            //Run Animation
                             initHeader();
                             addListeners();
-                            initAnimation();
                         })();
                     }
                 }
