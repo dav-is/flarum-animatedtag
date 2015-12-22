@@ -1,4 +1,4 @@
-System.register('davis/socialprofile/main', ['flarum/extend', 'flarum/components/CommentPost'], function (_export) {
+System.register('davis/animatedtag/main', ['flarum/extend', 'flarum/components/CommentPost'], function (_export) {
     'use strict';
 
     var extend, CommentPost;

@@ -2,7 +2,7 @@ var flarum = require('flarum-gulp');
 
 flarum({
   modules: {
-    'davis/socialprofile': [
+    'davis/animatedtag': [
       'src/**/*.js'
     ]
   }
