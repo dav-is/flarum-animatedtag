@@ -27,7 +27,7 @@
             "title": "Animated Tags",
             "icon": {
                 "image": "icon.png",
-                "backgroundColor": "#FFF",
+                "backgroundColor": "#F7FBFF",
                 "backgroundSize": "75%",
                 "backgroundRepeat": "no-repeat",
                 "backgroundPosition": "center"
