@@ -1,18 +1,20 @@
 import { extend } from 'flarum/extend';
-import CommentPost from 'flarum/components/CommentPost';
+import DiscussionHero from 'flarum/components/DiscussionHero';
 import DiscussionListItem from 'flarum/components/DiscussionListItem';
 
 app.initializers.add('davis-animatedtag', function() {
-    extend(CommentPost.prototype, 'config', function() {
-        renderani(app.forum.attribute('animationtype'),0);
+    extend(DiscussionHero.prototype, 'config', function() {
+        if (document.getElementById('tag-canvas')) { } else if (document.getElementsByClassName("Hero")[0]) {
+        renderani(app.forum.attribute('animationtype'));
+        }
     });
     extend(DiscussionListItem.prototype, 'config', function() {
-        renderani(app.forum.attribute('animationtype'),1);
+        if (document.getElementById('tag-canvas')) { } else if (document.getElementsByClassName("Hero")[0]) {
+        renderani(app.forum.attribute('animationtype'));
+        }
     });
     
-    function renderani(type, where){
-        //Make sure canvas doesn't get added twice
-        if (document.getElementById('tag-canvas')) { } else if (document.getElementsByClassName("Hero")[0]) {
+    function renderani(type){
             //Define Varibles
             var width, largeHeader, canvas, ctx, triangles, circles, height, target, topbar, heroitems, animateHeader = true;
             var rerun = false;
@@ -50,23 +52,25 @@ app.initializers.add('davis-animatedtag', function() {
                 width = window.innerWidth;
                 if (768 <= window.innerWidth) {
                     topbar = 52;
-                    switch (where){
-                        case 0:
-                            height = 141;
-                        break;
-                        case 1:
-                            height = 111;
-                        break;
+                    if (document.getElementsByClassName("DiscussionHero-title")[0]){
+                        height = 141;
+                    } else {
+                        if (document.getElementsByClassName("Hero-subtitle")[0].innerHTML){
+                            height = 133;    
+                        } else {
+                            height = 111;   
+                        }  
                     }
                 } else if (0 < window.innerWidth < 768) {
                     topbar = 46;
-                    switch (where){
-                        case 0:
-                            height = 102;
-                        break;
-                        case 1:
-                            height = 72;
-                        break;
+                    if (document.getElementsByClassName("DiscussionHero-title")[0]){
+                        height = 102;
+                    } else {
+                        if (document.getElementsByClassName("Hero-subtitle")[0].innerHTML){
+                            height = 91;    
+                        } else {
+                            height = 72;   
+                        }  
                     }
                 } else {
                     resize();
@@ -77,6 +81,8 @@ app.initializers.add('davis-animatedtag', function() {
                 heroitems = document.getElementsByClassName("container")[1];
                 largeHeader.style.height = height+'px';
                 heroitems.style.top = topbar+"px";
+                heroitems.style.position = "absolute";
+                heroitems.style.width = "100%";
                 
                 var canvastemp = document.createElement('canvas');
                 canvastemp.setAttribute("id", "tag-canvas");
@@ -151,26 +157,30 @@ app.initializers.add('davis-animatedtag', function() {
         
             function resize() {
                 width = window.innerWidth;
-                if (window.innerWidth > 768) {
+                if (768 <= window.innerWidth) {
                     topbar = 52;
-                    switch (where){
-                        case 0:
-                            height = 141;
-                        break;
-                        case 1:
-                            height = 111;
-                        break;
+                    if (document.getElementsByClassName("DiscussionHero-title")[0]){
+                        height = 141;
+                    } else {
+                        if (document.getElementsByClassName("Hero-subtitle")[0].innerHTML){
+                            height = 133;    
+                        } else {
+                            height = 111;   
+                        }  
+                    }
+                } else if (0 < window.innerWidth < 768) {
+                    topbar = 46;
+                    if (document.getElementsByClassName("DiscussionHero-title")[0]){
+                        height = 102;
+                    } else {
+                        if (document.getElementsByClassName("Hero-subtitle")[0].innerHTML){
+                            height = 91;    
+                        } else {
+                            height = 72;   
+                        }  
                     }
                 } else {
-                    topbar = 46;
-                    switch (where){
-                        case 0:
-                            height = 102;
-                        break;
-                        case 1:
-                            height = 72;
-                        break;
-                    }
+                    resize();
                 }
                 heroitems.style.top = topbar+"px";
                 largeHeader.style.height = height+'px';
@@ -287,5 +297,4 @@ app.initializers.add('davis-animatedtag', function() {
                 };
             }
         }
-    }
 });
