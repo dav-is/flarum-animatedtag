@@ -22,8 +22,8 @@ System.register('davis/animatedtag/main', ['flarum/extend', 'flarum/components/C
 
                 function renderani(type, where) {
                     //Make sure canvas doesn't get added twice
-                    if (document.getElementById('tag-canvas')) {} else {
-                        var width, largeHeader, canvas, ctx, triangles, circles, height, target, heroitems, animateHeader;
+                    if (document.getElementById('tag-canvas')) {} else if (document.getElementsByClassName("Hero")[0]) {
+                        var width, largeHeader, canvas, ctx, triangles, circles, height, target, topbar, heroitems, animateHeader;
                         var tpcolor;
                         var colors;
                         var i;
@@ -34,7 +34,6 @@ System.register('davis/animatedtag/main', ['flarum/extend', 'flarum/components/C
                         (function () {
                             var initHeader = function initHeader() {
                                 width = window.innerWidth;
-                                var topbar;
                                 if (window.innerWidth > 768) {
                                     topbar = 52;
                                     switch (where) {
@@ -136,7 +135,6 @@ System.register('davis/animatedtag/main', ['flarum/extend', 'flarum/components/C
 
                             var resize = function resize() {
                                 width = window.innerWidth;
-                                var topbar;
                                 if (window.innerWidth > 768) {
                                     topbar = 52;
                                     switch (where) {
@@ -283,8 +281,6 @@ System.register('davis/animatedtag/main', ['flarum/extend', 'flarum/components/C
                             tpcolor = {};
                             colors = [];
                             i = 0;
-
-                            //Define color of hero background
                             cltp = document.getElementsByClassName("Hero")[0].style['background-color'];
 
                             cltp = cltp.substring(4, cltp.length - 1).replace(/ /g, '').split(',');

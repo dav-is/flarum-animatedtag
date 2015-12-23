@@ -12,14 +12,13 @@ app.initializers.add('davis-animatedtag', function() {
     
     function renderani(type, where){
         //Make sure canvas doesn't get added twice
-        if (document.getElementById('tag-canvas')) { } else {
+        if (document.getElementById('tag-canvas')) { } else if (document.getElementsByClassName("Hero")[0]) {
             //Define Varibles
-            var width, largeHeader, canvas, ctx, triangles, circles, height, target, heroitems, animateHeader = true;
+            var width, largeHeader, canvas, ctx, triangles, circles, height, target, topbar, heroitems, animateHeader = true;
             var tpcolor = {};
             var colors = [];
             var i = 0;
             
-            //Define color of hero background
             var cltp = document.getElementsByClassName("Hero")[0].style['background-color'];
             cltp = cltp.substring(4, cltp.length-1)
                  .replace(/ /g, '')
@@ -48,7 +47,6 @@ app.initializers.add('davis-animatedtag', function() {
         
             function initHeader() {
                 width = window.innerWidth;
-                var topbar;
                 if (window.innerWidth > 768) {
                     topbar = 52;
                     switch (where){
@@ -149,7 +147,6 @@ app.initializers.add('davis-animatedtag', function() {
         
             function resize() {
                 width = window.innerWidth;
-                var topbar;
                 if (window.innerWidth > 768) {
                     topbar = 52;
                     switch (where){
