@@ -24,6 +24,7 @@ System.register('davis/animatedtag/main', ['flarum/extend', 'flarum/components/C
                     //Make sure canvas doesn't get added twice
                     if (document.getElementById('tag-canvas')) {} else if (document.getElementsByClassName("Hero")[0]) {
                         var width, largeHeader, canvas, ctx, triangles, circles, height, target, topbar, heroitems, animateHeader;
+                        var rerun;
                         var tpcolor;
                         var colors;
                         var i;
@@ -34,7 +35,7 @@ System.register('davis/animatedtag/main', ['flarum/extend', 'flarum/components/C
                         (function () {
                             var initHeader = function initHeader() {
                                 width = window.innerWidth;
-                                if (window.innerWidth > 768) {
+                                if (768 <= window.innerWidth) {
                                     topbar = 52;
                                     switch (where) {
                                         case 0:
@@ -44,7 +45,7 @@ System.register('davis/animatedtag/main', ['flarum/extend', 'flarum/components/C
                                             height = 111;
                                             break;
                                     }
-                                } else {
+                                } else if (0 < window.innerWidth < 768) {
                                     topbar = 46;
                                     switch (where) {
                                         case 0:
@@ -54,6 +55,8 @@ System.register('davis/animatedtag/main', ['flarum/extend', 'flarum/components/C
                                             height = 72;
                                             break;
                                     }
+                                } else {
+                                    resize();
                                 }
                                 target = { x: 0, y: height };
 
@@ -97,6 +100,7 @@ System.register('davis/animatedtag/main', ['flarum/extend', 'flarum/components/C
                                         break;
                                 }
                                 animate();
+                                resize();
                             };
 
                             var addTriangle = function addTriangle(delay) {
@@ -278,6 +282,7 @@ System.register('davis/animatedtag/main', ['flarum/extend', 'flarum/components/C
 
                             //Define Varibles
                             animateHeader = true;
+                            rerun = false;
                             tpcolor = {};
                             colors = [];
                             i = 0;

@@ -15,6 +15,7 @@ app.initializers.add('davis-animatedtag', function() {
         if (document.getElementById('tag-canvas')) { } else if (document.getElementsByClassName("Hero")[0]) {
             //Define Varibles
             var width, largeHeader, canvas, ctx, triangles, circles, height, target, topbar, heroitems, animateHeader = true;
+            var rerun = false;
             var tpcolor = {};
             var colors = [];
             var i = 0;
@@ -47,7 +48,7 @@ app.initializers.add('davis-animatedtag', function() {
         
             function initHeader() {
                 width = window.innerWidth;
-                if (window.innerWidth > 768) {
+                if (768 <= window.innerWidth) {
                     topbar = 52;
                     switch (where){
                         case 0:
@@ -57,7 +58,7 @@ app.initializers.add('davis-animatedtag', function() {
                             height = 111;
                         break;
                     }
-                } else {
+                } else if (0 < window.innerWidth < 768) {
                     topbar = 46;
                     switch (where){
                         case 0:
@@ -67,6 +68,8 @@ app.initializers.add('davis-animatedtag', function() {
                             height = 72;
                         break;
                     }
+                } else {
+                    resize();
                 }
                 target = {x: 0, y: height};
 
@@ -109,7 +112,8 @@ app.initializers.add('davis-animatedtag', function() {
                         }
                     break;
                 }
-               animate();
+                animate();
+                resize();
             }
         
             function addTriangle(delay) {
