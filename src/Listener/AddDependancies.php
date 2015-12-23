@@ -12,7 +12,7 @@ class AddDependancies
     {
         if($event->isForum()) {
                 $js = file_get_contents(realpath(__DIR__ . '/../../assets/js/depend.js'));
-                $event->view->addFootString($js);
+                $event->view->addHeadString($js);
         }
     }
 }

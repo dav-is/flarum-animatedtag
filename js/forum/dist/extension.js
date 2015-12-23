@@ -1,29 +1,32 @@
-System.register('davis/animatedtag/main', ['flarum/extend', 'flarum/components/CommentPost'], function (_export) {
+System.register('davis/animatedtag/main', ['flarum/extend', 'flarum/components/CommentPost', 'flarum/components/DiscussionListItem'], function (_export) {
     'use strict';
 
-    var extend, CommentPost;
+    var extend, CommentPost, DiscussionListItem;
     return {
         setters: [function (_flarumExtend) {
             extend = _flarumExtend.extend;
         }, function (_flarumComponentsCommentPost) {
             CommentPost = _flarumComponentsCommentPost['default'];
+        }, function (_flarumComponentsDiscussionListItem) {
+            DiscussionListItem = _flarumComponentsDiscussionListItem['default'];
         }],
         execute: function () {
 
             app.initializers.add('davis-animatedtag', function () {
                 extend(CommentPost.prototype, 'config', function () {
-                    renderani(app.forum.attribute('animationtype'));
+                    renderani(app.forum.attribute('animationtype'), 0);
+                });
+                extend(DiscussionListItem.prototype, 'config', function () {
+                    renderani(app.forum.attribute('animationtype'), 1);
                 });
 
-                function renderani(type) {
+                function renderani(type, where) {
                     //Make sure canvas doesn't get added twice
                     if (document.getElementById('tag-canvas')) {} else {
-                        var width, largeHeader, canvas, ctx, triangles, circles, height, target, animateHeader;
+                        var width, largeHeader, canvas, ctx, triangles, circles, height, target, heroitems, animateHeader;
                         var tpcolor;
                         var colors;
                         var i;
-                        var trifreq;
-                        var trinum;
                         var cltp;
                         var cl;
                         var tempclr;
@@ -31,11 +34,34 @@ System.register('davis/animatedtag/main', ['flarum/extend', 'flarum/components/C
                         (function () {
                             var initHeader = function initHeader() {
                                 width = window.innerWidth;
-                                height = window.innerHeight / 5;
+                                var topbar;
+                                if (window.innerWidth > 768) {
+                                    topbar = 52;
+                                    switch (where) {
+                                        case 0:
+                                            height = 141;
+                                            break;
+                                        case 1:
+                                            height = 111;
+                                            break;
+                                    }
+                                } else {
+                                    topbar = 46;
+                                    switch (where) {
+                                        case 0:
+                                            height = 102;
+                                            break;
+                                        case 1:
+                                            height = 72;
+                                            break;
+                                    }
+                                }
                                 target = { x: 0, y: height };
 
-                                largeHeader = document.getElementsByClassName("DiscussionHero--colored")[0];
+                                largeHeader = document.getElementsByClassName("Hero")[0];
+                                heroitems = document.getElementsByClassName("container")[1];
                                 largeHeader.style.height = height + 'px';
+                                heroitems.style.top = topbar + "px";
 
                                 var canvastemp = document.createElement('canvas');
                                 canvastemp.setAttribute("id", "tag-canvas");
@@ -52,8 +78,8 @@ System.register('davis/animatedtag/main', ['flarum/extend', 'flarum/components/C
                                 switch (type) {
                                     case "0":
                                         triangles = [];
-                                        for (var x = 0; x < trinum; x++) {
-                                            addTriangle(x * trifreq);
+                                        for (var x = 0; x < 480; x++) {
+                                            addTriangle(x * 10);
                                         }
                                         break;
                                     case "1":
@@ -110,7 +136,29 @@ System.register('davis/animatedtag/main', ['flarum/extend', 'flarum/components/C
 
                             var resize = function resize() {
                                 width = window.innerWidth;
-                                height = window.innerHeight / 5;
+                                var topbar;
+                                if (window.innerWidth > 768) {
+                                    topbar = 52;
+                                    switch (where) {
+                                        case 0:
+                                            height = 141;
+                                            break;
+                                        case 1:
+                                            height = 111;
+                                            break;
+                                    }
+                                } else {
+                                    topbar = 46;
+                                    switch (where) {
+                                        case 0:
+                                            height = 102;
+                                            break;
+                                        case 1:
+                                            height = 72;
+                                            break;
+                                    }
+                                }
+                                heroitems.style.top = topbar + "px";
                                 largeHeader.style.height = height + 'px';
                                 canvas.width = width;
                                 canvas.height = height;
@@ -235,12 +283,6 @@ System.register('davis/animatedtag/main', ['flarum/extend', 'flarum/components/C
                             tpcolor = {};
                             colors = [];
                             i = 0;
-
-                            //DELETE SOME TIME
-                            trifreq = 10;
-                            //Bigger is slower rel of shapes
-                            trinum = 480;
-                            //org 480
 
                             //Define color of hero background
                             cltp = document.getElementsByClassName("Hero")[0].style['background-color'];
