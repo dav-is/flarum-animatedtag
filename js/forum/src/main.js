@@ -57,7 +57,7 @@ app.initializers.add('davis-animatedtag', function() {
                     } else {
                         if (document.getElementsByClassName("Hero-subtitle")[0]){
                         if (document.getElementsByClassName("Hero-subtitle")[0].innerHTML){
-                            height = 133;    
+                            height = 113 + document.getElementsByClassName("Hero-subtitle")[0].clientHeight; //Take out 20     
                         } else {
                             height = 111;   
                         }  
@@ -70,7 +70,7 @@ app.initializers.add('davis-animatedtag', function() {
                     } else {
                         if (document.getElementsByClassName("Hero-subtitle")[0]){
                         if (document.getElementsByClassName("Hero-subtitle")[0].innerHTML){
-                            height = 91;    
+                            height = 71 + document.getElementsByClassName("Hero-subtitle")[0].clientHeight; //Take out 20    
                         } else {
                             height = 72;   
                         }
@@ -187,7 +187,7 @@ app.initializers.add('davis-animatedtag', function() {
                     } else {
                         if (document.getElementsByClassName("Hero-subtitle")[0]){
                         if (document.getElementsByClassName("Hero-subtitle")[0].innerHTML){
-                            height = 133;    
+                            height = 113 + document.getElementsByClassName("Hero-subtitle")[0].clientHeight; //Take out 20
                         } else {
                             height = 111;   
                         }  
@@ -200,7 +200,7 @@ app.initializers.add('davis-animatedtag', function() {
                     } else {
                         if (document.getElementsByClassName("Hero-subtitle")[0]){
                         if (document.getElementsByClassName("Hero-subtitle")[0].innerHTML){
-                            height = 91;    
+                            height = 71 + document.getElementsByClassName("Hero-subtitle")[0].clientHeight; //Take out 20 
                         } else {
                             height = 72;   
                         }  
