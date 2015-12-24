@@ -5,12 +5,16 @@ import DiscussionListItem from 'flarum/components/DiscussionListItem';
 app.initializers.add('davis-animatedtag', function() {
     extend(DiscussionHero.prototype, 'config', function() {
         if (document.getElementById('tag-canvas')) { } else if (document.getElementsByClassName("Hero")[0]) {
+        if (document.getElementsByClassName("WelcomeHero")[0]) {} else {
         renderani(app.forum.attribute('animationtype'));
+        }
         }
     });
     extend(DiscussionListItem.prototype, 'config', function() {
         if (document.getElementById('tag-canvas')) { } else if (document.getElementsByClassName("Hero")[0]) {
+        if (document.getElementsByClassName("WelcomeHero")[0]) {} else {
         renderani(app.forum.attribute('animationtype'));
+        }
         }
     });
     
